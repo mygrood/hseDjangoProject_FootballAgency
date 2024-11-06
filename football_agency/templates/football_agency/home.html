@@ -1,0 +1,17 @@
+{% extends 'football_agency/base.html' %}
+
+{% block content %}
+    <h1>Welcome to Football Agency by mygrood</h1>
+
+     <!-- Первая строка с кнопками игроков -->
+    <div class="mb-3">
+        <a href="{% url 'player_list' %}" class="btn btn-primary btn-lg">View Players</a>
+        <a href="{% url 'create_player' %}" class="btn btn-success btn-lg">Add New Player</a>
+    </div>
+
+    <!-- Вторая строка с кнопками команд -->
+    <div class="mb-3">
+        <a href="{% url 'team_list' %}" class="btn btn-primary btn-lg">View Teams</a>
+        <a href="{% url 'create_team' %}" class="btn btn-success btn-lg">Add New Team</a>
+    </div>
+{% endblock %}

@@ -1,32 +1,83 @@
 {% extends 'football_agency/base.html' %}
 
 {% block content %}
-<h2 class="fw-bold display-5">Players</h2>
-<a href="{% url 'create_player' %}" class="btn btn-success btn-lg mb-3">Add New Player</a>
+<h2>Players</h2>
+
+<a href="{% url 'create_player' %}" class="btn btn-success mb-3">Add New Player</a>
+
+<form method="get" class="mb-3">
+    <div class="form-row align-items-end">
+
+        <!-- Фильтр по команде -->
+        <div class="form-group col-md-3">
+            <label for="team">Team:</label>
+            <select name="team" id="team" class="form-control">
+                <option value="">All Teams</option>
+                {% for team in teams %}
+                    <option value="{{ team.id }}" {% if request.GET.team == team.id|stringformat:"s" %}selected{% endif %}>{{ team.team_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Поиск по фамилии -->
+        <div class="form-group col-md-3">
+            <label for="search">Search by Surname:</label>
+            <input type="text" name="search" id="search" class="form-control" placeholder="Enter surname" value="{{ request.GET.search }}">
+        </div>
+
+        <!-- Сортировка по полю -->
+        <div class="form-group col-md-2">
+            <label for="sort">Sort By:</label>
+            <select name="sort" id="sort" class="form-control">
+                <option value="id" {% if request.GET.sort == 'id' %}selected{% endif %}>ID</option>
+                <option value="name" {% if request.GET.sort == 'name' %}selected{% endif %}>Name</option>
+                <option value="surname" {% if request.GET.sort == 'surname' %}selected{% endif %}>Surname</option>
+                <option value="id_team__team_name" {% if request.GET.sort == 'id_team__team_name' %}selected{% endif %}>Team</option>
+                <option value="rating" {% if request.GET.sort == 'rating' %}selected{% endif %}>Rating</option>
+                <option value="potential" {% if request.GET.sort == 'potential' %}selected{% endif %}>Potential</option>
+            </select>
+        </div>
+
+        <!-- Порядок сортировки -->
+        <div class="form-group col-md-2">
+            <label for="direction">Order:</label>
+            <select name="direction" id="direction" class="form-control">
+                <option value="asc" {% if request.GET.direction == 'asc' %}selected{% endif %}>Ascending</option>
+                <option value="desc" {% if request.GET.direction == 'desc' %}selected{% endif %}>Descending</option>
+            </select>
+        </div>
+
+        <!-- Кнопка для применения фильтров -->
+        <div class="form-group col-md-2">
+            <button type="submit" class="btn btn-primary btn-block">Apply</button>
+        </div>
+    </div>
+</form>
+<!-- Таблица игроков -->
 <table class="table table-striped">
     <thead>
         <tr>
-            <th class="h5 fw-bold">ID</th>
-            <th class="h5 fw-bold">Name</th>
-            <th class="h5 fw-bold">Surname</th>
-            <th class="h5 fw-bold">Team</th>
-            <th class="h5 fw-bold">Photo</th>
-            <th class="h5 fw-bold"></th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Team</th>
+            <th>Rating</th>
+            <th>Potential</th>
+            <th>Image</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         {% for player in players %}
         <tr>
-            <td class="h5 fw-semibold">{{ player.id }}</td>
-            <td class="h5 fw-semibold">{{ player.name }}</td>
-            <td class="h5 fw-semibold">{{ player.surname }}</td>
-            <td class="h5 fw-semibold">{{ player.id_team.team_name }}</td>
+            <td>{{ player.id }}</td>
+            <td>{{ player.name }}</td>
+            <td>{{ player.surname }}</td>
+            <td>{{ player.id_team.team_name }}</td>
+            <td>{{ player.rating }}</td>
+            <td>{{ player.potential }}</td>
             <td><img src="{{ player.player_image.url }}" alt="{{ player.name }}" width="50"></td>
-            <td>
-                {% if player.id %}
-                    <a href="{% url 'player_detail' player.id %}" class="btn btn-info btn-sm">Подробнее</a>
-                {% endif %}
-            </td>
+            <td><a href="{% url 'player_detail' player.id %}" class="btn btn-info btn-sm">Подробнее</a></td>
         </tr>
         {% endfor %}
     </tbody>
