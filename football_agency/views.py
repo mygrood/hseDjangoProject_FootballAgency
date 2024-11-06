@@ -1,7 +1,8 @@
 # football_agency/views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Team, Player
 from .forms import TeamForm, PlayerForm
+
 
 # Создание команды
 def create_team(request):
@@ -34,3 +35,8 @@ def team_list(request):
 def player_list(request):
     players = Player.objects.all()
     return render(request, 'football_agency/player_list.html', {'players': players})
+
+# Функция для отображения деталей игрока
+def player_detail(request, player_id):
+    player = get_object_or_404(Player, id=player_id)
+    return render(request, 'football_agency/player_detail.html', {'player': player})

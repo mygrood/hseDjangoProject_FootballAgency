@@ -1,24 +1,24 @@
 {% extends 'football_agency/base.html' %}
 
 {% block content %}
-<h2>Teams</h2>
-<a href="{% url 'create_team' %}" class="btn btn-success mb-3">Add New Team</a>
+<h2 class="fw-bold display-5">Teams</h2>
+<a href="{% url 'create_team' %}" class="btn btn-success btn-lg mb-3">Add New Team</a>
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Country</th>
-            <th>Image</th>
+            <th class="h5 fw-bold">ID</th>
+            <th class="h5 fw-bold">Name</th>
+            <th class="h5 fw-bold">Country</th>
+            <th class="h5 fw-bold">Logo</th>
         </tr>
     </thead>
     <tbody>
         {% for team in teams %}
         <tr>
-            <td>{{ team.id_team }}</td>
-            <td>{{ team.team_name }}</td>
-            <td>{{ team.country }}</td>
-            <td><img src="{{ team.team_image.url }}" alt="{{ team.team_name }}" width="50"></td>
+            <td class="h5 fw-semibold">{{ team.id_team }}</td>
+            <td class="h5 fw-semibold">{{ team.team_name }}</td>
+            <td class="h5 fw-semibold">{{ team.country }}</td>
+            <td><img src="{{ team.team_image.url }}" alt="{{ team.team_name }}" class="img-fluid" style="max-width: 200px; height: auto;"></td>
         </tr>
         {% endfor %}
     </tbody>

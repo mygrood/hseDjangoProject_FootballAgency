@@ -1,0 +1,29 @@
+{% extends 'football_agency/base.html' %}
+
+{% block content %}
+<h2>{{ player.name }} {{ player.surname }}</h2>
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+            <img src="{{ player.player_image.url }}" class="card-img" alt="{{ player.name }}">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">Details</h5>
+                <p class="card-text"><strong>Age:</strong> {{ player.age }}</p>
+                <p class="card-text"><strong>Nationality:</strong> {{ player.nation }}</p>
+                <p class="card-text"><strong>Position:</strong> {{ player.position }}</p>
+                <p class="card-text"><strong>Rating:</strong> {{ player.rating }}</p>
+                <p class="card-text"><strong>Potential:</strong> {{ player.potential }}</p>
+                <p class="card-text"><strong>Mood:</strong> {{ player.mood }}</p>
+                <hr>
+                <h5 class="card-title">Team Information</h5>
+                <p class="card-text"><strong>Team Name:</strong> {{ player.id_team.team_name }}</p>
+                <p class="card-text"><strong>Country:</strong> {{ player.id_team.country }}</p>
+                <p class="card-text"><img src="{{ player.id_team.team_image.url }}" alt="{{ player.id_team.team_name }}" width="100"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="{% url 'player_list' %}" class="btn btn-primary">Back to Players</a>
+{% endblock %}
